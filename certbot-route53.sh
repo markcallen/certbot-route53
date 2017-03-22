@@ -17,7 +17,7 @@ if [ -z $CERTBOT_DOMAIN ]; then
 else
   [[ $CERTBOT_AUTH_OUTPUT ]] && ACTION="DELETE" || ACTION="UPSERT"
 
-  printf -v QUERY 'HostedZones[?ends_with(`%s.`,Name)].Id' $CERTBOT_DOMAIN
+  QUERY='HostedZones[?ends_with(`'"$CERTBOT_DOMAIN."'`,Name)].Id'
 
   HOSTED_ZONE_ID=$(aws route53 list-hosted-zones --query $QUERY --output text)
 
